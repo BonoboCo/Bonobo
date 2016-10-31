@@ -30,7 +30,7 @@ class App extends Component {
             messages: [],
             view: firstView,
             currentRoomId,
-            userId: '1',
+            //userId: '1',
             roomList: [],
             roomObj: {},
         };
@@ -60,7 +60,7 @@ class App extends Component {
       const newStateObj = { messages: data.msgs, roomObj: data.roomObj };
       this.setState(newStateObj);
     }
-    addNewRooms(rooms) {
+    addNewRooms(rooms) { // not being used?
       const newStateObj = { roomList: this.state.messages.concat(rooms)};
       this.setState(newStateObj);
     }
@@ -82,7 +82,7 @@ class App extends Component {
             });
       this.setState(newStateObj);
     }
-    createRoom() {
+    createRoom() { // use es6 fetch here? or jquery?
       const name = document.getElementById('create-room-name').value;
       const minsUntilExpiry = document.getElementById('create-room-lifetime').value;
       const expires = moment().add(minsUntilExpiry, 'minutes');
@@ -124,7 +124,7 @@ class App extends Component {
         } else if (this.state.view === 'createRoom') {
           return <RoomCreate createRoom={this.createRoom.bind(this)} changeView={this.changeView.bind(this)}/>
         } else {
-          return <div><h1>Where's your view, brah?</h1></div>
+          return <div><h1>View not found. Error in app.jsx App.render </h1></div>
         }
     }
 }
@@ -136,8 +136,8 @@ class RoomCreate extends Component {
         </input>
         <input id='create-room-lifetime' type='text' placeholder='Room Life'>
         </input>
-        <button className='btn-back' onClick={() => this.props.changeView('lobby')}>Create</button>
-        <button className='btn-create' onClick={() => this.props.createRoom()}>Cancel</button>
+        <button className='btn-back' onClick={() => this.props.changeView('lobby')}>Cancel</button>
+        <button className='btn-create' onClick={() => this.props.createRoom()}>Create</button>
       </div>
     )
   }

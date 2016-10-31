@@ -77,7 +77,7 @@ app.get('/auth/github_oauth/callback', passport
 
 //with successful authentication user is redirected to homepage. Otherwise, redirected back to login page.
 app.post('/login', (req,res,next) => next(), passport
-   .authenticate('github', {
+    .authenticate('github', {
                 successRedirect: '/',
                 failureRedirect: '/login',
                 failureFlash: true }));
