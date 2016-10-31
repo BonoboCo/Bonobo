@@ -69,9 +69,9 @@ module.exports = {
     })
     .catch ( (err) => {
       console.log(err);
-       res.statusCode = 400;
-       res.send(JSON.stringify(err) );
-       next();
+      res.statusCode = 400;
+      res.send(JSON.stringify(err) );
+      next();
     });
   }
 

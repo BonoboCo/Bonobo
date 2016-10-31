@@ -6,7 +6,7 @@ const { io } = require('../server.js');
 
 module.exports = {
   postMessage: (req,res,next) => {
-   res.setHeader('content-type', 'application/json', 'utf-8');
+    res.setHeader('content-type', 'application/json', 'utf-8');
     const room_identification = req.params.roomid;
     //parse req.body and save Object as headers
     const MessageToSave = req.body;
@@ -23,9 +23,9 @@ module.exports = {
     })
     .catch ( (err) => {
       console.log(err);
-       res.statusCode = 400;
-       res.send(JSON.stringify(err) );
-       next();
+      res.statusCode = 400;
+      res.send(JSON.stringify(err) );
+      next();
     });
 
 

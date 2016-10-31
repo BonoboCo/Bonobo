@@ -18,12 +18,14 @@ const {getRooms, createRoom} = require('./controllers/roomController.js');
 const {isLoggedIn} = require('./controllers/sessionController.js');
 const {Room, User, Msg} = require('../Schemas/Tables.js');
 const {GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET} = require('./config.secret');
-
+console.log(`${GITHUB_CLIENT_ID}`);
+console.log(`${GITHUB_CLIENT_SECRET}`);
 // Create our app
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({extended: true})); // support encoded bodies
 app.use(cookieParser());
+
 // app.use(express.static(path.join(__dirname, '../public')));
 app.use(passport.initialize());
 
@@ -69,16 +71,16 @@ app.get('/auth/github_oauth/callback', passport
     //here we are setting cookies
     res.cookie('user_id', id);
     res.cookie('displayname', displayname)
-  	res.cookie('session', req.session);
-  	res.redirect('/');
-	});
+    res.cookie('session', req.session);
+    res.redirect('/');
+  });
 
 //with successful authentication user is redirected to homepage. Otherwise, redirected back to login page.
 app.post('/login', (req,res,next) => next(), passport
    .authenticate('github', {
                 successRedirect: '/',
-							  failureRedirect: '/login',
-						    failureFlash: true }));
+                failureRedirect: '/login',
+                failureFlash: true }));
 
 
 app.get('/', isLoggedIn, (req,res) => res.sendFile(path.join(__dirname, '../public/index.html')));
