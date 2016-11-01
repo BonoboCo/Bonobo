@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import { render } from 'react-dom';
 
+import Lobby from './Lobby';
 import RoomCreate from './RoomCreate';
+import RoomView from './RoomView';
 
 const HOST = 'http://localhost:3000/';
 
