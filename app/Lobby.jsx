@@ -35,7 +35,7 @@ class Lobby extends Component {
     }
     return (
       <div className='lobby-container'>
-        <h2>Welcome to the Lobby</h2>
+        <h1>bonobo</h1>
         {roomDivs}
         <button className='btn-create' onClick={() => this.props.changeView('createRoom')}>Create New Room</button>
       </div>
