@@ -14,7 +14,8 @@ class RoomView extends Component {
           messages = {this.props.messages}
           addGotMessagesAndRoomData = {this.props.addGotMessagesAndRoomData}
           currentRoomId = {this.props.currentRoomId}
-          addNewMessages = {this.props.addNewMessages}/>
+          addNewMessages = {this.props.addNewMessages}
+          socket = {this.props.socket} />
       </div>
     );
   }
