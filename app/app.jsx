@@ -5,6 +5,8 @@ import Lobby from './Lobby';
 import RoomCreate from './RoomCreate';
 import RoomView from './RoomView';
 
+import io from 'socket.io-client';
+
 const HOST = 'http://localhost:3000/';
 
 require("./scss/main.scss");
