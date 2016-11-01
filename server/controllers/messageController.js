@@ -7,11 +7,10 @@ const { io } = require('../server.js');
 module.exports = {
   postMessage: (req,res,next) => {
     res.setHeader('content-type', 'application/json', 'utf-8');
-    const room_identification = req.params.roomid;
     //parse req.body and save Object as headers
     const MessageToSave = req.body;
-    MessageToSave.createdby = req.cookies.displayname;
-    MessageToSave.roomID = room_identification;
+    MessageToSave.createdby = req.cookies.display_name;
+    MessageToSave.roomID = req.params.roomid;
     //store to database
     //adding the destructured object to the database table (Msg)
     //if err => send err, if !err => res.send(success)

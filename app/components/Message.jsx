@@ -5,11 +5,16 @@ class Message extends Component {
   }
   render() {
     const thisTime = moment(this.props.data.createdAt).fromNow();
+
     return (
       <div className='msg-object'>
-        Sum Gai<span className='msg-creator'>{this.props.data.createdBy}</span> said at
-        <span className='msg-timestamp'>{thisTime}</span> :
-        <span className='msg-body'>{this.props.data.msgBody}</span>
+        <div style={{display:'inline-block', width:'100%'}}>
+          <span style={{float:'left'}} className='msg-creator'>{this.props.data.createdby}</span>
+          <span style={{float:'right'}} className='msg-timestamp'><small>{thisTime}</small></span>
+        </div>
+        <div style={{width:'100%', paddingLeft:'9px', paddingRight:'9px', textAlign:'left'}}>
+          <span className='msg-body'>{this.props.data.msgBody}</span>
+        </div>
       </div>
     )
   }
