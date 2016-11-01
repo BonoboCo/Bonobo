@@ -3,27 +3,28 @@ $hoverButtonColor: #52d297;
 $buttonTextColor: #52d2d2;
 
 body {
-    background: url("https://s-media-cache-ak0.pinimg.com/originals/fb/39/a5/fb39a5f75bd92b1cd3aecc60cf560291.jpg");
-    color: #ccc;
-    font-family: sans-serif;
+  margin: 0;
+  background-color: DarkOliveGreen;
+  color: #ccc;
+  font-family: sans-serif;
 }
 
-button{
-    box-shadow: $hoverButtonColor;
-    background: linear-gradient(to bottom, #ededed 5%, #bab1ba 100%);
-    background-color: $primaryColor;
-    border-radius: 5px;
-    border: 1px solid #d6bcd6;
-    display: inline-block;
-    cursor: pointer;
-    color: #white;
-    font-family: Arial;
-    font-size: 9px;
-    font-weight: bold;
-    padding: 7px 20px;
-    text-decoration: none;
-    text-shadow: 0px 1px 0px #e1e2ed;
-    margin: 1px 3.5px 1px;
+button {
+  box-shadow: $hoverButtonColor;
+  background: linear-gradient(to bottom, #ededed 5%, #bab1ba 100%);
+  background-color: $primaryColor;
+  border-radius: 5px;
+  border: 1px solid #d6bcd6;
+  display: inline-block;
+  cursor: pointer;
+  color: #white;
+  font-family: Arial;
+  font-size: 9px;
+  font-weight: bold;
+  padding: 7px 20px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #e1e2ed;
+  margin: 1px 3.5px 1px;
 }
 
 button:active {
@@ -35,9 +36,9 @@ button:active {
   margin: 5px 5px 2px;
 }
 .chatbox-container {
-    background-color: rgba(50, 70, 50, 0.7);
-    width: 60%;
-    margin: 2em auto;
+  background-color: rgba(50, 70, 50, 0.7);
+  width: 60%;
+  margin: 2em auto;
 }
 .msg-object, .room-object {
   width: 100%;
@@ -67,14 +68,21 @@ button:active {
 }
 h1, h2, h3, h4 {
   text-align: center;
+  margin: 1em auto;
+  padding: 1em;
   max-width: 200px;
   border-radius: 5px;
-  background-color: rgba(0,0,0,0.7);
+  background-color: rgba(0, 0, 0, 0.5);
   color: $hoverButtonColor;
 }
 
-input:focus{
+input:focus {
   outline: none;
+}
+
+input {
+  margin: 0 auto;
+  display: inline-block;
 }
 
 .signIn{
@@ -86,10 +94,14 @@ input:focus{
   margin-top: 20%;
 }
 
-.btn-create{
+.btn-create, .btn-back {
+  display: inline-block;
   color: black;
+  margin: 0 auto;
 }
 
-lobby-container{
+.lobby-container{
+}
 
+.room-create-container {
 }
