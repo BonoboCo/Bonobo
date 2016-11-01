@@ -61,7 +61,11 @@ const User = sequelize.define('user', {
   displayname: {
       type: Sequelize.STRING,
       allowNull: false
-    }
+    },
+  usersecret: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
   //room_id is created below via an association
 });
 

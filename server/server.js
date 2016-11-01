@@ -16,8 +16,6 @@ const {getRooms, createRoom, getRoomUsers} = require('./controllers/roomControll
 const {isLoggedIn} = require('./controllers/sessionController.js');
 const {Room, User, Msg} = require('../Schemas/Tables.js');
 const {GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET} = require('./config.secret');
-console.log(`${GITHUB_CLIENT_ID}`);
-console.log(`${GITHUB_CLIENT_SECRET}`);
 // Create our app
 
 app.use(bodyParser.json()); // support json encoded bodies
@@ -52,8 +50,9 @@ io.on('connection', (socket) => {
 //with successful authentication user is redirected to homepage. Otherwise, redirected back to login page.
 app.get('/login', (req,res) => res.sendFile(path.join(__dirname, '../public/login.html')));
 app.post('/login', (req,res,next) => {
-  let newUserId = req.body.username;
-  User.findOrCreate( { where: {displayname: req.body.username}})
+  let displayname = req.body.username;
+  let usersecret = req.body.usersecret;
+  User.findOrCreate( { where: {displayname, usersecret}})
     .spread((user, created) => {
       // here user would be the object created or found
       // created is set to true if a new user is created || false if found

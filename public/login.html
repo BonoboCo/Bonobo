@@ -9,13 +9,32 @@
 <body>
 <h1>Bonobo</h1>
 <div class="outer">
-  <form action="/login" method='post'>
+  <form id="loginform" action="/login" method='post'>
   <!-- <input type="image" class="signIn" src="./images/github.png" alt="Submit Form" /> -->
-  <input type="text" name="username"><br>
-  <input type="Submit" name="Submit">
+  <table>
+    Please enter a username and a secret code.<br />
+    This secret code acts as a password for your account.<br />
+    A new account will be created for you if you use a new secret code.<br />
+    <span style="color:red" id="formerror"></span>
+    <tr><td>Username</td><td><input id="formusername" type="text" name="username"></td></tr>
+    <tr><td>Secret</td> <td><input id="formsecret" type="password" name="usersecret"></td></tr>
+    <tr><td></td><td><input style="float:right" type="Submit" name="Submit"></td>
+  </table>
   </form>
 </div>
-  <!-- <script src="login.js"> </script> -->
+  <script>
+    let loginform = document.getElementById('loginform');
+    loginform.addEventListener('submit', (event) => {
+      let formusername = document.getElementById('formusername');
+      let formsecret = document.getElementById('formsecret');
+      let formerror = document.getElementById('formerror');
+      if(formusername.value.length === 0 || formsecret.value.length === 0){
+        formerror.innerHTML = "Invalid login. Please fill out a username and secret to log in.";
+        event.preventDefault();
+        return false;
+      }
+    })
+  </script>
   <script src="bundle.js"></script>
 </body>
 </html>
