@@ -73,6 +73,15 @@ module.exports = {
       res.send(JSON.stringify(err) );
       next();
     });
+  },
+
+  getRoomUsers: (req, res, next) => {
+    console.log(`getRoomUsers :: roomid[${req.params.roomid}]`);
+    const roomID = req.params.roomid;
+    User.findAll({where: {roomId: req.params.roomid}}).then((rows) => {
+      res.status(200).send(rows);
+      next();
+    });
   }
 
 

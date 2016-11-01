@@ -98,7 +98,7 @@ Room.hasMany(User, {as: 'users'});
 // User.hasMany(Msg, {as: 'msgs'}); //dont forget to uncomment
 
 //force tables to drop each time file is run,.
-sequelize.sync().then(() => {  });
+sequelize.sync({ /*logging: console.log, force: true */}).then(() => {  });
 
 //export tables Room, User, Msg to be used in get request files.
 module.exports =  { Room, User, Msg };
