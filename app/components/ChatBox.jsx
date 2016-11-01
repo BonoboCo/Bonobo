@@ -6,6 +6,7 @@ const HOST = 'http://localhost:3000/';
 class Chatbox extends Component {
   constructor(props) {
     super(props);
+    this.socket = this.props.socket;
   }
   componentDidMount() {
     console.log('mounting room', this.props.currentRoomId);
@@ -28,7 +29,7 @@ class Chatbox extends Component {
     const postReq = new XMLHttpRequest;
     postReq.addEventListener('load', () => {
       console.log('New Message Posted. ', postReq.responseText);
-      socket.emit('post', JSON.parse(postReq.responseText));
+      this.socket.emit('post', JSON.parse(postReq.responseText));
       // this.props.addNewMessages(JSON.parse(postReq.responseText));
     });
     postReq.open("POST", HOST + 'rooms/' + this.props.currentRoomId);
