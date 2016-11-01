@@ -1,8 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const passport = require('passport');
-const PassportGithub = require('passport-github2').Strategy;
 const Sequelize = require('sequelize');
 const session = require('express-session');
 
@@ -18,8 +16,6 @@ const {getRooms, createRoom, getRoomUsers} = require('./controllers/roomControll
 const {isLoggedIn} = require('./controllers/sessionController.js');
 const {Room, User, Msg} = require('../Schemas/Tables.js');
 const {GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET} = require('./config.secret');
-console.log(`${GITHUB_CLIENT_ID}`);
-console.log(`${GITHUB_CLIENT_SECRET}`);
 // Create our app
 
 app.use(bodyParser.json()); // support json encoded bodies
@@ -27,7 +23,6 @@ app.use(bodyParser.urlencoded({extended: true})); // support encoded bodies
 app.use(cookieParser());
 
 // app.use(express.static(path.join(__dirname, '../public')));
-app.use(passport.initialize());
 
 io.on('connection', (socket) => {
   console.log('Connected User');
@@ -52,48 +47,23 @@ io.on('connection', (socket) => {
   });
 });
 
-const passportObject = {
-  clientID: GITHUB_CLIENT_ID,
-  clientSecret: GITHUB_CLIENT_SECRET,
-  callbackURL: "http://localhost:3000/auth/github_oauth/callback"
-};
-//Passport session setup - we need to store the user ID when serializing, and find the user by ID when deserializing.
-passport.serializeUser( (user, done) => done(null, user));
-
-passport.deserializeUser((obj, done) => done(null, obj));
-
-//utilizing the GitHubStrategy within Passport. the Verify function will invoke a callback with a user object.
-
-passport.use(
-  new PassportGithub(passportObject,(accessToken, refreshToken, profile, done) => {
-    User.findOrCreate( {where: {displayname: profile.id}})
-    .then( (user) => done(null, user))
-    .catch( err => done(err))
-  }));
-
-app.get('/login', (req,res) => res.sendFile(path.join(__dirname, '../public/login.html')));
-
-//callback url for passport to authenticate with
-app.get('/auth/github_oauth/callback', passport
-  .authenticate('github', { failureRedirect: '/login'}),
-  (req, res) => {
-    const userInfo = req.user[0]['dataValues'];
-    const id = userInfo._id;
-    const displayname = userInfo.displayname;
-    //here we are setting cookies
-    res.cookie('user_id', id);
-    res.cookie('displayname', displayname)
-    res.cookie('session', req.session);
-    res.redirect('/');
-  });
-
 //with successful authentication user is redirected to homepage. Otherwise, redirected back to login page.
-app.post('/login', (req,res,next) => next(), passport
-    .authenticate('github', {
-                successRedirect: '/',
-                failureRedirect: '/login',
-                failureFlash: true }));
-
+app.get('/login', (req,res) => res.sendFile(path.join(__dirname, '../public/login.html')));
+app.post('/login', (req,res,next) => {
+  let displayname = req.body.username;
+  let usersecret = req.body.usersecret;
+  User.findOrCreate( { where: {displayname, usersecret}})
+    .spread((user, created) => {
+      // here user would be the object created or found
+      // created is set to true if a new user is created || false if found
+      user = user.get();
+      res.cookie('user_id', user._id);
+      res.cookie('session', user.displayname+user._id+user.createdAt);
+      res.cookie('display_name', user.displayname);
+      res.cookie('new_user', created);
+      next();
+    });
+}, (req, res) => {res.redirect('/')});
 
 app.get('/', isLoggedIn, (req,res) => res.sendFile(path.join(__dirname, '../public/index.html')));
 //Express route to get list of rooms in a nearby area
