@@ -14,7 +14,7 @@ const io = require('socket.io')(server);
 
 const path = require('path');
 const {postMessage, getMessage} = require('./controllers/messageController.js');
-const {getRooms, createRoom} = require('./controllers/roomController.js');
+const {getRooms, createRoom, getRoomUsers} = require('./controllers/roomController.js');
 const {isLoggedIn} = require('./controllers/sessionController.js');
 const {Room, User, Msg} = require('../Schemas/Tables.js');
 const {GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET} = require('./config.secret');
@@ -30,20 +30,32 @@ app.use(cookieParser());
 app.use(passport.initialize());
 
 io.on('connection', (socket) => {
-    console.log('Connected User');
-    socket.on('post', (msg) => {
-      console.log('emitting...');
-      io.emit(`${msg.roomID}`, msg);
+  console.log('Connected User');
+  socket.on('post', (msg) => {
+    console.log('emitting...');
+    io.emit(`${msg.roomID}`, msg);
+  });
+  socket.on('createRoom', (newRoomObj) => {
+    io.emit('newRoom', newRoomObj);
+  });
+  socket.on('userjoinroom', (joinRoomData) => {
+    console.log('Socket event [userjoinroom] triggered');
+    console.log(`user ${joinRoomData.userId} joined room ${joinRoomData.roomId}`);
+    // update users table with roomID
+    User.find({where: {_id: joinRoomData.userId}}).then(user => {
+      if(user){
+        user.updateAttributes({
+          roomId: joinRoomData.roomId,
+        });
+      }
     });
-    socket.on('createRoom', (newRoomObj) => {
-      io.emit('newRoom', newRoomObj);
-    });
+  });
 });
 
 const passportObject = {
-        clientID: GITHUB_CLIENT_ID,
-        clientSecret: GITHUB_CLIENT_SECRET,
-        callbackURL: "http://localhost:3000/auth/github_oauth/callback"
+  clientID: GITHUB_CLIENT_ID,
+  clientSecret: GITHUB_CLIENT_SECRET,
+  callbackURL: "http://localhost:3000/auth/github_oauth/callback"
 };
 //Passport session setup - we need to store the user ID when serializing, and find the user by ID when deserializing.
 passport.serializeUser( (user, done) => done(null, user));
@@ -93,8 +105,10 @@ app.post('/rooms/:roomid', isLoggedIn, postMessage, (req,res) => res.end()) //ad
 
 //Express route for returning list of messages for specific :roomid
 app.get('/rooms/:roomid', isLoggedIn, getMessage, (req, res) => res.end());
-
 app.post('/createroom', isLoggedIn, createRoom, (req, res) => res.end());
+
+//Express route for returning list of users for a specific :roomid
+app.get('/rooms/:roomid/users', isLoggedIn, getRoomUsers, (req,res) => res.end());
 
 //get request to send stylesheet to the html
 app.get('/css/styles.css', (req,res) => res.sendFile(path.join(__dirname, '../public/css/styles.css')))

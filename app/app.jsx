@@ -84,6 +84,19 @@ class App extends Component {
       console.log('socket msg received:', msg);
       this.addNewMessages(msg);
     });
+    // userjoinroom data emission logic
+    let userIdEndIndex;
+    for( let i = document.cookie.indexOf('user_id')+1; i < document.cookie.length; ++i){
+      if(document.cookie[i] === ';'){
+        userIdEndIndex = i;
+        break;
+      }
+    }
+    let userId = document.cookie.slice(document.cookie.indexOf('user_id'), userIdEndIndex).split('=')[1];
+    let joinRoomData = { userId: userId, roomId: roomObj._id};
+    socket.emit(`userjoinroom`, joinRoomData);
+    // end userjoin data data emission logic
+
     this.setState(newStateObj);
   }
   createRoom() { // use es6 fetch here? or jquery?
