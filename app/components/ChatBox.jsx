@@ -1,4 +1,8 @@
 import React, {Component} from 'react';
+import Message from './Message';
+
+const HOST = 'http://localhost:3000/';
+
 class Chatbox extends Component {
   constructor(props) {
     super(props);
@@ -45,3 +49,5 @@ class Chatbox extends Component {
     )
   }
 }
+
+export default Chatbox;

@@ -1,8 +1,7 @@
-
 import React, { Component } from 'react';
 import Room from './components/Room.jsx';
 
-import moment from 'moment';
+const HOST = 'http://localhost:3000/';
 
 class Lobby extends Component {
   constructor(props) {
