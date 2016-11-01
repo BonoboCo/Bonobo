@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Chatbox } from './components/Chatbox.jsx'
 
-import { moment } from 'moment';
-
 class RoomView extends Component {
   render() {
     const expiry = moment(this.props.roomObj.expires).fromNow();
