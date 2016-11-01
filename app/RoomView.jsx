@@ -23,3 +23,5 @@ class RoomView extends Component {
     );
   }
 }
+
+export default RoomView;
