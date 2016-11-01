@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
-const { render } = require('react-dom');
+import { render } from 'react-dom';
+
+import RoomCreate from './RoomCreate';
+
 const HOST = 'http://localhost:3000/';
 
 require("./scss/main.scss");
 let socket = io.connect();
 
-// TESTING RELATED --------------------- //
 class App extends Component {
   constructor() {
       super();
@@ -129,14 +131,5 @@ class App extends Component {
   }
 }
 
-
-
-
-
-
-
-
-
-
-
+// Top level react injection to page
 render(<App />, document.getElementById('app'));
