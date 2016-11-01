@@ -10,9 +10,7 @@ class RoomView extends Component {
       <div id='chatroom-container'>
         <h3>Room: {this.props.roomObj.name}</h3>
         <h4>Expires: {expiry}</h4>
-        <button className = 'btn-back' onClick = {() => this.props.changeView('lobby')}>
-          Back to Lobby
-        </button>
+        <button className = 'btn-back' onClick = {() => this.props.changeView('lobby')}>Back to Lobby</button>
         <Chatbox
           changeView = {this.props.changeView}
           messages = {this.props.messages}
