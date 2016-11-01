@@ -17,4 +17,4 @@ class Room extends Component {
   }
 }
 
-export default Lobby;
+export default Room;

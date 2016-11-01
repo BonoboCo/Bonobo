@@ -21,7 +21,6 @@ class Lobby extends Component {
       getReq.setRequestHeader('Lat', lat);
       getReq.setRequestHeader('Long', long);
       getReq.addEventListener('load', () => {
-        console.log('Rooms GOT', getReq.responseText);
         this.props.addGotRooms(JSON.parse(getReq.responseText));
       });
       getReq.send();
