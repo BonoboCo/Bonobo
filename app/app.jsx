@@ -14,18 +14,28 @@ let socket = io.connect();
 
 class App extends Component {
   constructor() {
-    super();
-    // this little chunk helps persist the current view across page refreshes
-    // using localstorage
-    let firstView;
-    let currentRoomId;
-    if (localStorage.getItem('lastView') !== null) {
-      firstView = localStorage.getItem('lastView');
-      currentRoomId = localStorage.getItem('lastRoom');
-      socket.on(`${currentRoomId}`, (msg) => {
-        console.log('socket msg received:', msg);
-        this.addNewMessages(msg);
-      });
+      super();
+      // this little chunk helps persist the current view across page refreshes
+      // using localstorage
+      let firstView;
+      let currentRoomId;
+      if (localStorage.getItem('lastView') !== null) {
+        firstView = localStorage.getItem('lastView');
+        currentRoomId = localStorage.getItem('lastRoom');
+        socket.on(`${currentRoomId}`, (msg) => {
+          console.log('socket msg received:', msg);
+          console.log(msg.createdby);
+          console.log(msg.createdby.indexOf('joined'));
+          this.addNewMessages(msg);
+          if(msg.createdby.indexOf('joined') > 0){
+            //message recieved
+            console.log('sendmessageaudio');
+            document.getElementById('enterroomaudio').play();
+          } else {
+            console.log('enterroomaudio');
+            document.getElementById('sendmessageaudio').play();
+          }
+        });
       // Set defaults if this is their first time.
     } else {
       firstView = 'lobby';
@@ -98,14 +108,32 @@ class App extends Component {
     });
     // userjoinroom data emission logic
     let userIdEndIndex;
+<<<<<<< HEAD
     for (let i = document.cookie.indexOf('user_id') + 1; i < document.cookie.length; ++i) {
       if (document.cookie[i] === ';') {
+=======
+    let displayNameEndIndex;
+    for(let i = document.cookie.indexOf('display_name'); i < document.cookie.length; ++i){
+      if(document.cookie[i] === ';'){
+        displayNameEndIndex = i;
+        break;
+      }
+    }
+    for( let i = document.cookie.indexOf('user_id')+1; i < document.cookie.length; ++i){
+      if(document.cookie[i] === ';'){
+>>>>>>> 46ceefd5bdfdd0ac630cd82851375696fe29e7af
         userIdEndIndex = i;
         break;
       }
     }
+    let displayName = document.cookie.slice(document.cookie.indexOf('display_name'), displayNameEndIndex).split('=')[1];
     let userId = document.cookie.slice(document.cookie.indexOf('user_id'), userIdEndIndex).split('=')[1];
+<<<<<<< HEAD
     let joinRoomData = { userId: userId, roomId: roomObj._id };
+=======
+
+    let joinRoomData = { userId: userId, roomId: roomObj._id, displayName: displayName };
+>>>>>>> 46ceefd5bdfdd0ac630cd82851375696fe29e7af
     socket.emit(`userjoinroom`, joinRoomData);
     // end userjoin data data emission logic
 
