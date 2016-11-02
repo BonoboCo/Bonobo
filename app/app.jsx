@@ -108,10 +108,6 @@ class App extends Component {
     });
     // userjoinroom data emission logic
     let userIdEndIndex;
-<<<<<<< HEAD
-    for (let i = document.cookie.indexOf('user_id') + 1; i < document.cookie.length; ++i) {
-      if (document.cookie[i] === ';') {
-=======
     let displayNameEndIndex;
     for(let i = document.cookie.indexOf('display_name'); i < document.cookie.length; ++i){
       if(document.cookie[i] === ';'){
@@ -121,19 +117,13 @@ class App extends Component {
     }
     for( let i = document.cookie.indexOf('user_id')+1; i < document.cookie.length; ++i){
       if(document.cookie[i] === ';'){
->>>>>>> 46ceefd5bdfdd0ac630cd82851375696fe29e7af
         userIdEndIndex = i;
         break;
       }
     }
     let displayName = document.cookie.slice(document.cookie.indexOf('display_name'), displayNameEndIndex).split('=')[1];
     let userId = document.cookie.slice(document.cookie.indexOf('user_id'), userIdEndIndex).split('=')[1];
-<<<<<<< HEAD
-    let joinRoomData = { userId: userId, roomId: roomObj._id };
-=======
-
     let joinRoomData = { userId: userId, roomId: roomObj._id, displayName: displayName };
->>>>>>> 46ceefd5bdfdd0ac630cd82851375696fe29e7af
     socket.emit(`userjoinroom`, joinRoomData);
     // end userjoin data data emission logic
 
@@ -174,31 +164,28 @@ class App extends Component {
     this.changeView('lobby');
   }*/
   render() {
-    if (this.state.view === 'room') {
-      return <RoomView
-        addGiphy={this.addGiphy.bind(this)}
-        roomObj={this.state.roomObj}
-        currentRoomId={this.state.currentRoomId}
-        messages={this.state.messages}
-        changeView={this.changeView.bind(this)}
-        addGotMessagesAndRoomData={this.addGotMessagesAndRoomData.bind(this)}
-        addNewMessages={this.addNewMessages.bind(this)}
-        users={this.state.users}
-        addNewUsers={this.addNewUsers.bind(this)}
-        socket={socket} />
-    } else if (this.state.view === 'lobby') {
-      return <Lobby 
-        roomList={this.state.roomList} 
-        addGotRooms={this.addGotRooms.bind(this)} 
-        joinRoom={this.joinRoom.bind(this)} 
-        changeView={this.changeView.bind(this)} />
-    } else if (this.state.view === 'createRoom') {
-      return <RoomCreate 
-        createRoom={this.createRoom.bind(this)} 
-        changeView={this.changeView.bind(this)} />
-    } else {
-      return <div><h1>View not found. Error in app.jsx App.render </h1></div>
-    }
+      if (this.state.view === 'room') {
+        return <RoomView
+          addGiphy = {this.addGiphy.bind(this)}
+          roomObj = {this.state.roomObj}
+          currentRoomId = {this.state.currentRoomId}
+          messages = {this.state.messages}
+          changeView = {this.changeView.bind(this)}
+          addGotMessagesAndRoomData = {this.addGotMessagesAndRoomData.bind(this)}
+          addNewMessages = {this.addNewMessages.bind(this)}
+          users={this.state.users}
+          addNewUsers={this.addNewUsers.bind(this)}
+          socket = {socket} />
+      } else if (this.state.view === 'lobby') {
+        return <Lobby
+          createRoom={this.createRoom.bind(this)}
+          roomList={this.state.roomList}
+          addGotRooms={this.addGotRooms.bind(this)}
+          joinRoom={this.joinRoom.bind(this)}
+          changeView={this.changeView.bind(this)}/>
+      } else {
+        return <div><h1>View not found. Error in app.jsx App.render </h1></div>
+      }
   }
 }
 
