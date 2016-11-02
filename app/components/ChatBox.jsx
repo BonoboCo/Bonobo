@@ -39,7 +39,13 @@ class Chatbox extends Component {
   render() {
     const messagedivs = [];
     for (let i = 0; i < this.props.messages.length; i++) {
-      messagedivs.push(<Message key={`msg${i}`} data={this.props.messages[i]} />);
+      messagedivs.push(
+        <Message
+          addGiphy = {this.props.addGiphy}
+          index = {i}
+          key = {`msg${i}`}
+          data = {this.props.messages[i]} />
+      );
     }
     return  (
       <div className="chatbox-container">
