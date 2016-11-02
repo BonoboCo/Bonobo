@@ -36,6 +36,14 @@ io.on('connection', (socket) => {
   socket.on('userjoinroom', (joinRoomData) => {
     console.log('Socket event [userjoinroom] triggered');
     console.log(`user ${joinRoomData.userId} joined room ${joinRoomData.roomId}`);
+    let userJoinMsg = {
+      _id: -1,
+      //createdby:"admin", roomID:"roomID", msgBody:"username has joined the penis", _id:"null"
+      createdby: `${joinRoomData.displayName} has joined the room`,
+      msgBody:"",
+      updatedAt: Date.now,
+    }
+    io.emit(`${joinRoomData.roomId}`, userJoinMsg);
     // update users table with roomID
     User.find({where: {_id: joinRoomData.userId}}).then(user => {
       if(user){

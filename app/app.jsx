@@ -88,14 +88,23 @@ class App extends Component {
     });
     // userjoinroom data emission logic
     let userIdEndIndex;
+    let displayNameEndIndex;
+    for(let i = document.cookie.indexOf('display_name'); i < document.cookie.length; ++i){
+      if(document.cookie[i] === ';'){
+        displayNameEndIndex = i;
+        break;
+      }
+    }
     for( let i = document.cookie.indexOf('user_id')+1; i < document.cookie.length; ++i){
       if(document.cookie[i] === ';'){
         userIdEndIndex = i;
         break;
       }
     }
+    let displayName = document.cookie.slice(document.cookie.indexOf('display_name'), displayNameEndIndex).split('=')[1];
     let userId = document.cookie.slice(document.cookie.indexOf('user_id'), userIdEndIndex).split('=')[1];
-    let joinRoomData = { userId: userId, roomId: roomObj._id};
+
+    let joinRoomData = { userId: userId, roomId: roomObj._id, displayName: displayName };
     socket.emit(`userjoinroom`, joinRoomData);
     // end userjoin data data emission logic
 
