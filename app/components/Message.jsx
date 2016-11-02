@@ -1,11 +1,30 @@
 import React, {Component} from 'react';
+
 class Message extends Component {
-  constructor(props) {
-    super(props);
+  componentDidMount() {
+    // giphy api constants
+    const GIPHY_TRIGGER = '/giphy ';
+    const GIPHY_API_URI = 'http://api.giphy.com/v1/gifs';
+    const GIPHY_API_KEY = 'dc6zaTOxFJmzC';
+
+    // 1. detect if msg body starts with GIPHY_TRIGGER
+    // 2. fetch a giphy img uri from the giphy api with rest of the msg body
+    // 3. create an img elem with the img uri and replace msg body via addGiphy(..)
+    const giphyDetected = this.props.data.msgBody.substring(0, GIPHY_TRIGGER.length) === GIPHY_TRIGGER;
+    if (giphyDetected) {
+      const giphyKeyword = this.props.data.msgBody.substring(GIPHY_TRIGGER.length);
+      fetch(`${GIPHY_API_URI}/translate?s=${giphyKeyword}&api_key=${GIPHY_API_KEY}`)
+        .then(res => res.json())
+        .then(data => {
+          const imgUri = data.data.images.fixed_height.url;
+          const giphyComponent = <img src={imgUri} />;
+          this.props.addGiphy(this.props.index, giphyComponent);
+        })
+        .catch(err => console.error('[error] giphy api fetch:', err));
+    }
   }
   render() {
     const thisTime = moment(this.props.data.createdAt).fromNow();
-
     return (
       <div className='msg-object'>
         <div style={{display:'inline-block', width:'100%'}}>

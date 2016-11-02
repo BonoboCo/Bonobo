@@ -15,6 +15,7 @@ class RoomView extends Component {
           users = {this.props.users}
           addNewUsers= {this.props.addNewUsers}/>
         <Chatbox
+          addGiphy = {this.props.addGiphy}
           changeView = {this.props.changeView}
           messages = {this.props.messages}
           addGotMessagesAndRoomData = {this.props.addGotMessagesAndRoomData}
