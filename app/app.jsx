@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { render } from 'react-dom';
 
 import Lobby from './Lobby';
@@ -14,58 +14,58 @@ let socket = io.connect();
 
 class App extends Component {
   constructor() {
-      super();
-      // this little chunk helps persist the current view across page refreshes
-      // using localstorage
-      let firstView;
-      let currentRoomId;
-      if (localStorage.getItem('lastView') !== null) {
-        firstView = localStorage.getItem('lastView');
-        currentRoomId = localStorage.getItem('lastRoom');
-        socket.on(`${currentRoomId}`, (msg) => {
-          console.log('socket msg received:', msg);
-          this.addNewMessages(msg);
-        });
+    super();
+    // this little chunk helps persist the current view across page refreshes
+    // using localstorage
+    let firstView;
+    let currentRoomId;
+    if (localStorage.getItem('lastView') !== null) {
+      firstView = localStorage.getItem('lastView');
+      currentRoomId = localStorage.getItem('lastRoom');
+      socket.on(`${currentRoomId}`, (msg) => {
+        console.log('socket msg received:', msg);
+        this.addNewMessages(msg);
+      });
       // Set defaults if this is their first time.
-      } else {
-        firstView = 'lobby';
-        currentRoomId = '';
-      }
-      console.log(firstView, currentRoomId);
-      this.state = {
-          messages: [],
-          view: firstView,
-          currentRoomId,
-          users: [],
-          roomList: [],
-          roomObj: {},
-      };
+    } else {
+      firstView = 'lobby';
+      currentRoomId = '';
+    }
+    console.log(firstView, currentRoomId);
+    this.state = {
+      messages: [],
+      view: firstView,
+      currentRoomId,
+      users: [],
+      roomList: [],
+      roomObj: {},
+    };
   }
   changeView(view) {
     // clear existing socket listeners, set localStorage
     // for help with view persistence, and set state to swap out components
     socket.off();
-    const newStateObj = {view};
+    const newStateObj = { view };
     console.log('Changing to view:', view);
     localStorage.setItem('lastView', view);
     // when entering the lobby, add a listener for newRoom events
     if (view === 'lobby') {
       socket.on('newRoom', newRoomObj => {
-        const newStateObj = {roomList: this.state.roomList.concat(newRoomObj)};
+        const newStateObj = { roomList: this.state.roomList.concat(newRoomObj) };
         this.setState(newStateObj);
       });
     }
     this.setState(newStateObj);
   }
   addNewMessages(msgs) {
-    const newStateObj = { messages: this.state.messages.concat(msgs)};
+    const newStateObj = { messages: this.state.messages.concat(msgs) };
     this.setState(newStateObj);
   }
   // function to pass down to ChatBox component for rendering giphy
   addGiphy(msgIndex, giphy) {
     const msgCopy = this.state.messages.slice();
     msgCopy[msgIndex].msgBody = giphy;
-    this.setState({messages: msgCopy});
+    this.setState({ messages: msgCopy });
   }
   addGotMessagesAndRoomData(data) {
     // Also make a socket connection!
@@ -73,15 +73,15 @@ class App extends Component {
     this.setState(newStateObj);
   }
   addNewUsers(data) {
-    const newStateObj = { users: data};
+    const newStateObj = { users: data };
     this.setState(newStateObj);
   }
   addNewRooms(rooms) { // not being used?
-    const newStateObj = { roomList: this.state.messages.concat(rooms)};
+    const newStateObj = { roomList: this.state.messages.concat(rooms) };
     this.setState(newStateObj);
   }
   addGotRooms(rooms) {
-    const newStateObj = { roomList: rooms};
+    const newStateObj = { roomList: rooms };
     this.setState(newStateObj);
   }
   joinRoom(roomObj) {
@@ -98,14 +98,14 @@ class App extends Component {
     });
     // userjoinroom data emission logic
     let userIdEndIndex;
-    for( let i = document.cookie.indexOf('user_id')+1; i < document.cookie.length; ++i){
-      if(document.cookie[i] === ';'){
+    for (let i = document.cookie.indexOf('user_id') + 1; i < document.cookie.length; ++i) {
+      if (document.cookie[i] === ';') {
         userIdEndIndex = i;
         break;
       }
     }
     let userId = document.cookie.slice(document.cookie.indexOf('user_id'), userIdEndIndex).split('=')[1];
-    let joinRoomData = { userId: userId, roomId: roomObj._id};
+    let joinRoomData = { userId: userId, roomId: roomObj._id };
     socket.emit(`userjoinroom`, joinRoomData);
     // end userjoin data data emission logic
 
@@ -146,25 +146,31 @@ class App extends Component {
     this.changeView('lobby');
   }*/
   render() {
-      if (this.state.view === 'room') {
-        return <RoomView
-          addGiphy = {this.addGiphy.bind(this)}
-          roomObj = {this.state.roomObj}
-          currentRoomId = {this.state.currentRoomId}
-          messages = {this.state.messages}
-          changeView = {this.changeView.bind(this)}
-          addGotMessagesAndRoomData = {this.addGotMessagesAndRoomData.bind(this)}
-          addNewMessages = {this.addNewMessages.bind(this)}
-          users={this.state.users} 
-          addNewUsers={this.addNewUsers.bind(this)}
-          socket = {socket} />
-      } else if (this.state.view === 'lobby') {
-        return <Lobby roomList={this.state.roomList} addGotRooms={this.addGotRooms.bind(this)} joinRoom={this.joinRoom.bind(this)} changeView={this.changeView.bind(this)}/>
-      } else if (this.state.view === 'createRoom') {
-        return <RoomCreate createRoom={this.createRoom.bind(this)} changeView={this.changeView.bind(this)}/>
-      } else {
-        return <div><h1>View not found. Error in app.jsx App.render </h1></div>
-      }
+    if (this.state.view === 'room') {
+      return <RoomView
+        addGiphy={this.addGiphy.bind(this)}
+        roomObj={this.state.roomObj}
+        currentRoomId={this.state.currentRoomId}
+        messages={this.state.messages}
+        changeView={this.changeView.bind(this)}
+        addGotMessagesAndRoomData={this.addGotMessagesAndRoomData.bind(this)}
+        addNewMessages={this.addNewMessages.bind(this)}
+        users={this.state.users}
+        addNewUsers={this.addNewUsers.bind(this)}
+        socket={socket} />
+    } else if (this.state.view === 'lobby') {
+      return <Lobby 
+        roomList={this.state.roomList} 
+        addGotRooms={this.addGotRooms.bind(this)} 
+        joinRoom={this.joinRoom.bind(this)} 
+        changeView={this.changeView.bind(this)} />
+    } else if (this.state.view === 'createRoom') {
+      return <RoomCreate 
+        createRoom={this.createRoom.bind(this)} 
+        changeView={this.changeView.bind(this)} />
+    } else {
+      return <div><h1>View not found. Error in app.jsx App.render </h1></div>
+    }
   }
 }
 
