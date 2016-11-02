@@ -19,9 +19,15 @@ class Chatbox extends Component {
       else this.props.changeView('lobby');
     });
     getReq.send();
+
+    document.getElementById('newMsgBody').addEventListener('keyup', (event) => {
+      if (event.key === 'Enter') {
+        this.postMsg();
+      }
+    });
   }
   postMsg() {
-    const msg = document.getElementById('newmsgbody').value;
+    const msg = document.getElementById('newMsgBody').value;
     const msgObj = {
       msgBody: msg,
     };
@@ -30,16 +36,17 @@ class Chatbox extends Component {
     postReq.addEventListener('load', () => {
       console.log('New Message Posted. ', postReq.responseText);
       this.socket.emit('post', JSON.parse(postReq.responseText));
-      // this.props.addNewMessages(JSON.parse(postReq.responseText));
     });
     postReq.open("POST", HOST + 'rooms/' + this.props.currentRoomId);
     postReq.setRequestHeader("Content-type", "application/json");
     postReq.send(JSON.stringify(msgObj));
+
+    document.getElementById('newMsgBody').value = '';
   }
   render() {
-    const messagedivs = [];
+    const messageDivs = [];
     for (let i = 0; i < this.props.messages.length; i++) {
-      messagedivs.push(
+      messageDivs.push(
         <Message
           addGiphy = {this.props.addGiphy}
           index = {i}
@@ -47,11 +54,14 @@ class Chatbox extends Component {
           data = {this.props.messages[i]} />
       );
     }
-    return  (
+    return (
       <div className="chatbox-container">
-        {messagedivs}
-          <input type='text' id='newmsgbody' name='msgbody'></input>
-          <button className='btn-postmsg' onClick={() => this.postMsg()}>Post</button>
+        {messageDivs}
+          <input type='text' id='newMsgBody' name='msgbody'></input>
+          <button className='btn-postmsg'
+            onClick = {this.postMsg.bind(this)}>
+            Post
+          </button>
       </div>
     )
   }
