@@ -18,6 +18,7 @@ class Message extends Component {
         .then(data => {
           const imgUri = data.data.images.fixed_height.url;
           const giphyComponent = <img src={imgUri} />;
+          //console.log(this.props);
           this.props.addGiphy(this.props.index, giphyComponent);
         })
         .catch(err => console.error('[error] giphy api fetch:', err));

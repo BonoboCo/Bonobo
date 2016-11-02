@@ -24,7 +24,17 @@ class App extends Component {
         currentRoomId = localStorage.getItem('lastRoom');
         socket.on(`${currentRoomId}`, (msg) => {
           console.log('socket msg received:', msg);
+          console.log(msg.createdby);
+          console.log(msg.createdby.indexOf('joined'));
           this.addNewMessages(msg);
+          if(msg.createdby.indexOf('joined') > 0){
+            //message recieved
+            console.log('sendmessageaudio');
+            document.getElementById('enterroomaudio').play();
+          } else {
+            console.log('enterroomaudio');
+            document.getElementById('sendmessageaudio').play();
+          }
         });
       // Set defaults if this is their first time.
       } else {

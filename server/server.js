@@ -6,6 +6,7 @@ const session = require('express-session');
 
 const app = express();
 const server = require('http').createServer(app);
+const fs = require('fs');
 
 //creates a new server
 const io = require('socket.io')(server);
@@ -38,7 +39,6 @@ io.on('connection', (socket) => {
     console.log(`user ${joinRoomData.userId} joined room ${joinRoomData.roomId}`);
     let userJoinMsg = {
       _id: -1,
-      //createdby:"admin", roomID:"roomID", msgBody:"username has joined the penis", _id:"null"
       createdby: `${joinRoomData.displayName} has joined the room`,
       msgBody:"",
       updatedAt: Date.now,
@@ -92,6 +92,11 @@ app.get('/rooms/:roomid/users', isLoggedIn, getRoomUsers, (req,res) => res.end()
 app.get('/css/styles.css', (req,res) => res.sendFile(path.join(__dirname, '../public/css/styles.css')))
 app.get('/bundle.js', (req,res) => res.sendFile(path.join(__dirname, '../public/bundle.js')));
 app.get('/images/github.png', (req,res) => res.sendFile(path.join(__dirname, '../public/images/github.png')));
+
+app.get('/sounds/:soundfile', (req,res) => {
+  console.log(__dirname + '/../public/sounds/'+req.params.sounddfile);
+  res.status(200).send(fs.readFileSync(__dirname + '/../public/sounds/'+req.params.soundfile))
+});
 
 //listening on port 3000
 server.listen(3000, () => console.log('Express server is up on port 3000'));
