@@ -36,7 +36,7 @@ class App extends Component {
           messages: [],
           view: firstView,
           currentRoomId,
-          //userId: '1',
+          users: [],
           roomList: [],
           roomObj: {},
       };
@@ -70,6 +70,10 @@ class App extends Component {
   addGotMessagesAndRoomData(data) {
     // Also make a socket connection!
     const newStateObj = { messages: data.msgs, roomObj: data.roomObj };
+    this.setState(newStateObj);
+  }
+  addNewUsers(data) {
+    const newStateObj = { users: data};
     this.setState(newStateObj);
   }
   addNewRooms(rooms) { // not being used?
@@ -151,6 +155,8 @@ class App extends Component {
           changeView = {this.changeView.bind(this)}
           addGotMessagesAndRoomData = {this.addGotMessagesAndRoomData.bind(this)}
           addNewMessages = {this.addNewMessages.bind(this)}
+          users={this.state.users} 
+          addNewUsers={this.addNewUsers.bind(this)}
           socket = {socket} />
       } else if (this.state.view === 'lobby') {
         return <Lobby roomList={this.state.roomList} addGotRooms={this.addGotRooms.bind(this)} joinRoom={this.joinRoom.bind(this)} changeView={this.changeView.bind(this)}/>

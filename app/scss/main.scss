@@ -2,11 +2,16 @@ $primaryColor: #134136;
 $hoverButtonColor: #52d297;
 $buttonTextColor: #52d2d2;
 
+
+
 body {
   margin: 0;
-  background-color: DarkOliveGreen;
   color: #ccc;
   font-family: sans-serif;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: rgba(112,145,118,1);
 }
 
 button {
@@ -17,7 +22,7 @@ button {
   border: 1px solid #d6bcd6;
   display: inline-block;
   cursor: pointer;
-  color: #white;
+  color: white;
   font-family: Arial;
   font-size: 9px;
   font-weight: bold;
@@ -96,14 +101,47 @@ input {
   margin-top: 20%;
 }
 
-.btn-create, .btn-back {
+.btn-back .btn-create{
   display: inline-block;
   color: black;
   margin: 0 auto;
+  padding: 0.5em 0 0.5em 0;
+  color: goldenrod;
+  text-align: center;
+}
+
+.btn-create-room {
+  display: inline-block;
+  color: black;
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+  padding: 0.5em 0 0.5em 0;
+  color: goldenrod;
+  text-align: center;
+  font-size: 22px;
 }
 
 .lobby-container{
 }
 
 .room-create-container {
+}
+
+.user-container {
+  background-color: rgba(50, 70, 50, 0.7);
+  font-size: 16px;
+  width: 12%;
+  margin: 1em 0 1em 1em;
+  padding: 0.5em;
+}
+
+.user-title {
+  font-weight: bold;
+  color: #aca;
+}
+
+.users {
+  padding: 2px 0;
+  color: goldenrod;
 }

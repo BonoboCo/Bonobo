@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Chatbox from './components/Chatbox.jsx'
+import Chatbox from './components/Chatbox.jsx';
+import UserList from './components/UserList.jsx';
 
 class RoomView extends Component {
   render() {
@@ -9,6 +10,10 @@ class RoomView extends Component {
         <h3>Room: {this.props.roomObj.name}</h3>
         <h4>Expires: {expiry}</h4>
         <button className = 'btn-back' onClick = {() => this.props.changeView('lobby')}>Back to Lobby</button>
+        <UserList 
+          currentRoomId = {this.props.currentRoomId}
+          users = {this.props.users}
+          addNewUsers= {this.props.addNewUsers}/>
         <Chatbox
           addGiphy = {this.props.addGiphy}
           changeView = {this.props.changeView}
@@ -16,7 +21,7 @@ class RoomView extends Component {
           addGotMessagesAndRoomData = {this.props.addGotMessagesAndRoomData}
           currentRoomId = {this.props.currentRoomId}
           addNewMessages = {this.props.addNewMessages}
-          socket = {this.props.socket} />
+          socket = {this.props.socket}/>
       </div>
     );
   }
