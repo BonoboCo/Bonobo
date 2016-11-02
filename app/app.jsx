@@ -61,6 +61,12 @@ class App extends Component {
     const newStateObj = { messages: this.state.messages.concat(msgs)};
     this.setState(newStateObj);
   }
+  // function to pass down to ChatBox component for rendering giphy
+  addGiphy(msgIndex, giphy) {
+    const msgCopy = this.state.messages.slice();
+    msgCopy[msgIndex].msgBody = giphy;
+    this.setState({messages: msgCopy});
+  }
   addGotMessagesAndRoomData(data) {
     // Also make a socket connection!
     const newStateObj = { messages: data.msgs, roomObj: data.roomObj };
@@ -146,7 +152,15 @@ class App extends Component {
   }*/
   render() {
       if (this.state.view === 'room') {
-        return <RoomView roomObj={this.state.roomObj} currentRoomId={this.state.currentRoomId} messages={this.state.messages} changeView={this.changeView.bind(this)} addGotMessagesAndRoomData={this.addGotMessagesAndRoomData.bind(this)} addNewMessages={this.addNewMessages.bind(this)} socket={socket}/>
+        return <RoomView
+          addGiphy = {this.addGiphy.bind(this)}
+          roomObj = {this.state.roomObj}
+          currentRoomId = {this.state.currentRoomId}
+          messages = {this.state.messages}
+          changeView = {this.changeView.bind(this)}
+          addGotMessagesAndRoomData = {this.addGotMessagesAndRoomData.bind(this)}
+          addNewMessages = {this.addNewMessages.bind(this)}
+          socket = {socket} />
       } else if (this.state.view === 'lobby') {
         return <Lobby roomList={this.state.roomList} addGotRooms={this.addGotRooms.bind(this)} joinRoom={this.joinRoom.bind(this)} changeView={this.changeView.bind(this)}/>
       } else if (this.state.view === 'createRoom') {
