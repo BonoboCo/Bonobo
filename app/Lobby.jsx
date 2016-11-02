@@ -71,7 +71,11 @@ class Lobby extends Component {
           onMapClick={_.noop}
           onMarkerRightClick={_.noop}
           />
-        <button className='btn-create-room' onClick={() => this.props.changeView('createRoom')}>Create New Room</button>
+        <div className='room-create-container'>
+          <input id='create-room-name' type='text' placeholder='Room Name'></input>
+          <input id='create-room-lifetime' type='text' placeholder='Expiry time'></input>
+          <button className='btn-bigger' onClick={() => this.props.createRoom()}>Create</button>
+        </div>
         {roomDivs}
       </div>
     )

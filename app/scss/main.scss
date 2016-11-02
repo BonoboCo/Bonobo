@@ -38,7 +38,10 @@ button:active {
 }
 
 #create-room-name, #create-room-lifetime{
-  margin: 5px 5px 2px;
+  margin: 5px 5px 4px;
+  font-size: 22px;
+  width: 200px;
+  padding: 9px;
 }
 .chatbox-container {
   background-color: rgba(50, 70, 50, 0.7);
@@ -71,7 +74,7 @@ button:active {
 }
 .msg-timestamp {
   font-style: oblique;
-    margin: 0 0.5em;
+  margin: 0 0.5em;
 }
 h1, h2, h3, h4 {
   text-align: center;
@@ -110,12 +113,12 @@ input {
   text-align: center;
 }
 
-.btn-create-room {
+.btn-bigger {
   display: inline-block;
   color: black;
-  margin: 0 auto;
+  margin: 0 auto 5px 5px;
   text-align: center;
-  width: 100%;
+  width: 150px;
   padding: 0.5em 0 0.5em 0;
   color: goldenrod;
   text-align: center;
@@ -126,6 +129,7 @@ input {
 }
 
 .room-create-container {
+  text-align: center;
 }
 
 .user-container {

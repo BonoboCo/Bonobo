@@ -155,13 +155,16 @@ class App extends Component {
           changeView = {this.changeView.bind(this)}
           addGotMessagesAndRoomData = {this.addGotMessagesAndRoomData.bind(this)}
           addNewMessages = {this.addNewMessages.bind(this)}
-          users={this.state.users} 
+          users={this.state.users}
           addNewUsers={this.addNewUsers.bind(this)}
           socket = {socket} />
       } else if (this.state.view === 'lobby') {
-        return <Lobby roomList={this.state.roomList} addGotRooms={this.addGotRooms.bind(this)} joinRoom={this.joinRoom.bind(this)} changeView={this.changeView.bind(this)}/>
-      } else if (this.state.view === 'createRoom') {
-        return <RoomCreate createRoom={this.createRoom.bind(this)} changeView={this.changeView.bind(this)}/>
+        return <Lobby
+          createRoom={this.createRoom.bind(this)}
+          roomList={this.state.roomList}
+          addGotRooms={this.addGotRooms.bind(this)}
+          joinRoom={this.joinRoom.bind(this)}
+          changeView={this.changeView.bind(this)}/>
       } else {
         return <div><h1>View not found. Error in app.jsx App.render </h1></div>
       }
