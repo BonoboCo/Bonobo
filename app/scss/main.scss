@@ -1,8 +1,19 @@
+// Color Pallette
 $primaryColor: #134136;
 $hoverButtonColor: #52d297;
 $buttonTextColor: #52d2d2;
-
-
+//Original pallette
+$brown: rgba(112, 78, 46, 1);
+$lightBrown: rgba(121, 116, 92, 1);
+$lightYellow: rgba(230, 248, 178, 1);
+$lemon: rgba(205, 231, 127, 1);
+$greyGreen: rgba(112, 145, 118, 1);
+//Other colors
+$color1: rgba(202, 209, 120, 1);
+$color2: rgba(211, 213, 124, 1);
+$color3: rgba(199, 170, 116, 1);
+$color4: rgba(149, 121, 100, 1);
+$color5: rgba(96, 49, 64, 1);
 
 body {
   margin: 0;
@@ -11,7 +22,7 @@ body {
   height: 100%;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-color: rgba(112,145,118,1);
+  background-color: $greyGreen;
 }
 
 button {
@@ -48,6 +59,7 @@ button:active {
   width: 60%;
   margin: 2em auto;
   padding: 0.5em;
+     overflow: scroll;
 }
 .msg-object, .room-object {
   width: 100%;

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { render } from 'react-dom';
 
 import Lobby from './Lobby';
@@ -24,48 +24,58 @@ class App extends Component {
         currentRoomId = localStorage.getItem('lastRoom');
         socket.on(`${currentRoomId}`, (msg) => {
           console.log('socket msg received:', msg);
+          console.log(msg.createdby);
+          console.log(msg.createdby.indexOf('joined'));
           this.addNewMessages(msg);
+          if(msg.createdby.indexOf('joined') > 0){
+            //message recieved
+            console.log('sendmessageaudio');
+            document.getElementById('enterroomaudio').play();
+          } else {
+            console.log('enterroomaudio');
+            document.getElementById('sendmessageaudio').play();
+          }
         });
       // Set defaults if this is their first time.
-      } else {
-        firstView = 'lobby';
-        currentRoomId = '';
-      }
-      console.log(firstView, currentRoomId);
-      this.state = {
-          messages: [],
-          view: firstView,
-          currentRoomId,
-          users: [],
-          roomList: [],
-          roomObj: {},
-      };
+    } else {
+      firstView = 'lobby';
+      currentRoomId = '';
+    }
+    console.log(firstView, currentRoomId);
+    this.state = {
+      messages: [],
+      view: firstView,
+      currentRoomId,
+      users: [],
+      roomList: [],
+      roomObj: {},
+    };
   }
   changeView(view) {
     // clear existing socket listeners, set localStorage
     // for help with view persistence, and set state to swap out components
     socket.off();
-    const newStateObj = {view};
+    const newStateObj = { view };
     console.log('Changing to view:', view);
     localStorage.setItem('lastView', view);
     // when entering the lobby, add a listener for newRoom events
     if (view === 'lobby') {
       socket.on('newRoom', newRoomObj => {
-        const newStateObj = {roomList: this.state.roomList.concat(newRoomObj)};
+        const newStateObj = { roomList: this.state.roomList.concat(newRoomObj) };
         this.setState(newStateObj);
       });
     }
     this.setState(newStateObj);
   }
   addNewMessages(msgs) {
-    const newStateObj = { messages: this.state.messages.concat(msgs)};
+    const newStateObj = { messages: this.state.messages.concat(msgs) };
     this.setState(newStateObj);
   }
   // function to pass down to ChatBox component for rendering giphy
   addGiphy(msgIndex, giphy) {
     const msgCopy = this.state.messages.slice();
     msgCopy[msgIndex].msgBody = giphy;
-    this.setState({messages: msgCopy});
+    this.setState({ messages: msgCopy });
   }
   addGotMessagesAndRoomData(data) {
     // Also make a socket connection!
@@ -73,15 +83,15 @@ class App extends Component {
     this.setState(newStateObj);
   }
   addNewUsers(data) {
-    const newStateObj = { users: data};
+    const newStateObj = { users: data };
     this.setState(newStateObj);
   }
   addNewRooms(rooms) { // not being used?
-    const newStateObj = { roomList: this.state.messages.concat(rooms)};
+    const newStateObj = { roomList: this.state.messages.concat(rooms) };
     this.setState(newStateObj);
   }
   addGotRooms(rooms) {
-    const newStateObj = { roomList: rooms};
+    const newStateObj = { roomList: rooms };
     this.setState(newStateObj);
   }
   joinRoom(roomObj) {
@@ -98,14 +108,22 @@ class App extends Component {
     });
     // userjoinroom data emission logic
     let userIdEndIndex;
+    let displayNameEndIndex;
+    for(let i = document.cookie.indexOf('display_name'); i < document.cookie.length; ++i){
+      if(document.cookie[i] === ';'){
+        displayNameEndIndex = i;
+        break;
+      }
+    }
     for( let i = document.cookie.indexOf('user_id')+1; i < document.cookie.length; ++i){
       if(document.cookie[i] === ';'){
         userIdEndIndex = i;
         break;
       }
     }
+    let displayName = document.cookie.slice(document.cookie.indexOf('display_name'), displayNameEndIndex).split('=')[1];
     let userId = document.cookie.slice(document.cookie.indexOf('user_id'), userIdEndIndex).split('=')[1];
-    let joinRoomData = { userId: userId, roomId: roomObj._id};
+    let joinRoomData = { userId: userId, roomId: roomObj._id, displayName: displayName };
     socket.emit(`userjoinroom`, joinRoomData);
     // end userjoin data data emission logic
 
