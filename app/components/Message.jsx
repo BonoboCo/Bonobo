@@ -10,9 +10,10 @@ class Message extends Component {
     // 1. detect if msg body starts with GIPHY_TRIGGER
     // 2. fetch a giphy img uri from the giphy api with rest of the msg body
     // 3. create an img elem with the img uri and replace msg body via addGiphy(..)
-    const giphyDetected = this.props.data.msgBody.substring(0, GIPHY_TRIGGER.length) === GIPHY_TRIGGER;
+    const msgBody = this.props.data.msgBody;
+    const giphyDetected = (typeof msgBody === 'string') ? msgBody.substring(0, GIPHY_TRIGGER.length) === GIPHY_TRIGGER : false;
     if (giphyDetected) {
-      const giphyKeyword = this.props.data.msgBody.substring(GIPHY_TRIGGER.length);
+      const giphyKeyword = msgBody.substring(GIPHY_TRIGGER.length);
       fetch(`${GIPHY_API_URI}/translate?s=${giphyKeyword}&api_key=${GIPHY_API_KEY}`)
         .then(res => res.json())
         .then(data => {

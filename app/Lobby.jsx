@@ -43,15 +43,17 @@ class Lobby extends Component {
     const GettingStartedGoogleMap = withGoogleMap(props => (
       <GoogleMap
         ref={props.onMapLoad}
-        defaultZoom={17}
+        defaultZoom={15}
         defaultCenter={{ lat: this.lat, lng: this.long }}
         onClick={props.onMapClick}
+        options={{scrollwheel: false}}
         >
         <Circle
           center={{ lat: this.lat, lng: this.long }}
           draggable={false}
-          radius={50}
+          radius={300}
           visible={true}
+          options={{fillColor: '#FFFF00', strokeColor: '#000000', strokeOpacity: 0.6, strokeWeight: 2,}}
           onClick={_.noop}
           onRightClick={_.noop}
           onDragStart={_.noop}
@@ -62,15 +64,15 @@ class Lobby extends Component {
     return (
       <div className='lobby-container'>
         <h1>bonobo</h1>
-        {roomDivs}
-        <button className='btn-create' onClick={() => this.props.changeView('createRoom')}>Create New Room</button>
         <GettingStartedGoogleMap
-          containerElement={<div style={{ height: 400, width: 400 }} />}
-          mapElement={<div style={{ height: 400, width: 400 }} />}
+          containerElement={<div style={{ height: 250, width: '100%' }} />}
+          mapElement={<div style={{ height: 250, width: '100%' }} />}
           onMapLoad={_.noop}
           onMapClick={_.noop}
           onMarkerRightClick={_.noop}
           />
+        <button className='btn-create-room' onClick={() => this.props.changeView('createRoom')}>Create New Room</button>
+        {roomDivs}
       </div>
     )
   }
