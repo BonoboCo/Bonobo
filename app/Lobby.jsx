@@ -62,8 +62,8 @@ class Lobby extends Component {
     ));
 
     return (
-      <div className='lobby-container'>
-        <h1>bonobo</h1>
+      <div id='lobby-container'>
+        <img id='logo' src='http://i.imgur.com/J0XqyGh.png' />
         <GettingStartedGoogleMap
           containerElement={<div style={{ height: 250, width: '100%' }} />}
           mapElement={<div style={{ height: 250, width: '100%' }} />}
@@ -71,12 +71,14 @@ class Lobby extends Component {
           onMapClick={_.noop}
           onMarkerRightClick={_.noop}
           />
-        <div className='room-create-container'>
+        <div id='room-create-container'>
           <input id='create-room-name' type='text' placeholder='Room Name'></input>
-          <input id='create-room-lifetime' type='text' placeholder='Expiry time'></input>
+          <input id='create-room-lifetime' type='text' placeholder='Expiry Time'></input>
           <button className='btn-bigger' onClick={() => this.props.createRoom()}>Create</button>
         </div>
-        {roomDivs}
+        <div id='room-div-container'>
+          {roomDivs}
+        </div>
       </div>
     )
   }

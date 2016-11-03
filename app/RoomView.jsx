@@ -7,10 +7,17 @@ class RoomView extends Component {
     const expiry = moment(this.props.roomObj.expires).fromNow();
     return (
       <div id='chatroom-container'>
-        <h3>Room: {this.props.roomObj.name}</h3>
-        <h4>Expires: {expiry}</h4>
-        <button className = 'btn-back' onClick = {() => this.props.changeView('lobby')}>Back to Lobby</button>
-        <UserList 
+        <img id='logo' src='http://i.imgur.com/J0XqyGh.png' />
+        <h4>Room: {this.props.roomObj.name}<br />Expires: {expiry}</h4>
+        <button
+          className = 'btn-back'
+          style = {{
+            position: 'absolute',
+            top: '1em',
+            left: '1em'
+          }}
+          onClick = {() => this.props.changeView('lobby')}>Back to Lobby</button>
+        <UserList
           currentRoomId = {this.props.currentRoomId}
           users = {this.props.users}
           addNewUsers= {this.props.addNewUsers}/>

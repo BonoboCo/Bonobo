@@ -55,13 +55,17 @@ class Chatbox extends Component {
       );
     }
     return (
-      <div className="chatbox-container">
-        {messageDivs}
+      <div>
+        <div className='chatbox-container'>
+          {messageDivs}
+        </div>
+        <div id='msgPostDiv'>
           <input type='text' id='newMsgBody' name='msgbody'></input>
           <button className='btn-postmsg'
             onClick = {this.postMsg.bind(this)}>
             Post
           </button>
+        </div>
       </div>
     )
   }
