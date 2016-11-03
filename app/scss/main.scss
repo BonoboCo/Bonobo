@@ -1,3 +1,4 @@
+
 // Color Pallette
 $primaryColor: #134136;
 $hoverButtonColor: #52d297;
@@ -15,31 +16,31 @@ $color3: rgba(199, 170, 116, 1);
 $color4: rgba(149, 121, 100, 1);
 $color5: rgba(96, 49, 64, 1);
 
+* {
+  // border: 1px dashed red;
+}
+
 body {
   margin: 0;
   color: #ccc;
   font-family: sans-serif;
-  height: 100%;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-color: $greyGreen;
+  background-color: $lightYellow;
 }
 
 button {
-  box-shadow: $hoverButtonColor;
   background: linear-gradient(to bottom, #ededed 5%, #bab1ba 100%);
-  background-color: $primaryColor;
+  // background-color: $color3;
   border-radius: 5px;
   border: 1px solid #d6bcd6;
   display: inline-block;
   cursor: pointer;
-  color: white;
+  color: $color4;
   font-family: Arial;
-  font-size: 9px;
+  font-size: 22px;
   font-weight: bold;
   padding: 7px 20px;
   text-decoration: none;
-  text-shadow: 0px 1px 0px #e1e2ed;
+  // text-shadow: 0px 1px 0px #e1e2ed;
   margin: 1px 3.5px 1px;
 }
 
@@ -54,35 +55,62 @@ button:active {
   width: 200px;
   padding: 9px;
 }
-.chatbox-container {
-  background-color: rgba(50, 70, 50, 0.7);
-  width: 60%;
-  margin: 2em auto;
-  padding: 0.5em;
-     overflow: scroll;
+
+#room-create-container {
+  margin: 1em auto;
 }
+
+// #room-div-container {
+//   border: 5px solid $lemon;
+// }
+
+.chatbox-container {
+  background-color: $lemon;
+  width: 60%;
+  margin: 2em auto 0 auto;
+  padding: 0.5em;
+  overflow: scroll;
+  height: 500px;
+}
+#msgPostDiv {
+  width: 60%;
+  padding: 0.5em;
+  display: inline-block;
+}
+
 .msg-object, .room-object {
+  display: inline-block;
+  text-align: left;
   width: 100%;
   margin: 0 auto;
   padding: 0.5em 0 0.5em 0;
-  color: goldenrod;
-  text-align: center;
+  color: $color4;
 }
+
+.room-object {
+  width: 800px;
+  border: 5px solid $lemon;
+}
+
 .msg-object:nth-of-type(odd), .room-object:nth-of-type(odd) {
-  background-color: rgba(0, 50, 0, 0.7);
+  background-color: $lemon;
 }
 .msg-object:nth-of-type(even), .room-object:nth-of-type(even) {
-  background-color: rgba(50, 100, 50, 0.7);
+  background-color: $lightYellow;
 }
 .msg-creator, .room-creator {
+  display: inline-block;
   font-weight: 700;
   margin: 0 0.5em;
+  width: 150px;
 }
 .mgs-body {
   color: #aca !important;
 }
 .room-name, .room-expires {
-  margin: 0 2em;
+  display: inline-block;
+  margin: 0 .5em;
+  width: 200px;
 }
 .msg-timestamp {
   font-style: oblique;
@@ -90,12 +118,12 @@ button:active {
 }
 h1, h2, h3, h4 {
   text-align: center;
-  margin: 1em auto;
+  margin: 0em auto 1em auto;
   padding: 1em;
   max-width: 200px;
   border-radius: 5px;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: $hoverButtonColor;
+  background-color: $lemon;
+  color: $color4;
 }
 
 input:focus {
@@ -103,8 +131,10 @@ input:focus {
 }
 
 input {
-  margin: 0 auto;
-  display: inline-block;
+  margin: 5px 5px 4px;
+  font-size: 22px;
+  width: 200px;
+  padding: 9px;
 }
 
 .signIn{
@@ -116,48 +146,71 @@ input {
   margin-top: 20%;
 }
 
-.btn-back .btn-create{
+.btn-back .btn-create .btn-joinroom {
   display: inline-block;
-  color: black;
   margin: 0 auto;
   padding: 0.5em 0 0.5em 0;
-  color: goldenrod;
+  color: $color4;
   text-align: center;
 }
 
+// .btn-back {
+//   position: absolute;
+//   top: 1em;
+//   left: 1em;
+// }
+
 .btn-bigger {
   display: inline-block;
-  color: black;
   margin: 0 auto 5px 5px;
   text-align: center;
   width: 150px;
   padding: 0.5em 0 0.5em 0;
-  color: goldenrod;
+  color: $color4;
   text-align: center;
   font-size: 22px;
 }
 
-.lobby-container{
+#lobby-container{
+  text-align: center;
 }
 
-.room-create-container {
+#chatroom-container {
   text-align: center;
 }
 
 .user-container {
-  background-color: rgba(50, 70, 50, 0.7);
+  background-color: $greyGreen;
+  border-radius: 3px;
   font-size: 16px;
   width: 12%;
   margin: 1em 0 1em 1em;
   padding: 0.5em;
+  position: absolute;
+  top: 0;
+  right: 1em;
 }
 
 .user-title {
   font-weight: bold;
-  color: #aca;
+  color: $lemon;
 }
 
 .users {
   padding: 2px 0;
-  color: goldenrod;
+  color: $color4;
+}
+
+#logo {
+  display: inline-block;
+  margin: 1em auto;
+}
+
+.room-row {
+  width: 100%;
+}
+
+#newMsgBody {
+  width: 400px;
+  margin: 1em;
 }
